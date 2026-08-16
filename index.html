@@ -316,13 +316,13 @@
 
     <div class="controls">
         <div class="filters">
-            <button class="active" onclick="filterCategory('All')">All</button>
-            <button onclick="filterCategory('Denim')">Denim</button>
-            <button onclick="filterCategory('Tops')">Tops</button>
-            <button onclick="filterCategory('Pants')">Pants</button>
-            <button onclick="filterCategory('Outerwear')">Outerwear</button>
-            <button onclick="filterCategory('Dresses')">Dresses</button>
-            <button onclick="filterCategory('Traditional')">Traditional</button>
+            <button class="active" onclick="filterCategory(event,'All')">All</button>
+            <button onclick="filterCategory(event,'Denim')">Denim</button>
+            <button onclick="filterCategory(event,'Tops')">Tops</button>
+            <button onclick="filterCategory(event,'Pants')">Pants</button>
+            <button onclick="filterCategory(event,'Outerwear')">Outerwear</button>
+            <button onclick="filterCategory(event,'Dresses')">Dresses</button>
+            <button onclick="filterCategory(event,'Traditional')">Traditional</button>
         </div>
     </div>
 
@@ -330,7 +330,7 @@
 
     <!-- Product Modal -->
     <div class="modal" id="modal">
-        <div class="modal-content">
+        <div class="modal-content" role="dialog" aria-modal="true">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <div id="modal-body"></div>
         </div>
@@ -370,6 +370,25 @@
         let cart = [];
         let selectedSize = 'M';
 
+        // Load cart from localStorage
+        function loadCart() {
+            try {
+                const raw = localStorage.getItem('bvoys_cart');
+                if (raw) cart = JSON.parse(raw);
+            } catch (e) {
+                console.warn('Failed to load cart from localStorage', e);
+                cart = [];
+            }
+        }
+
+        function saveCart() {
+            try {
+                localStorage.setItem('bvoys_cart', JSON.stringify(cart));
+            } catch (e) {
+                console.warn('Failed to save cart', e);
+            }
+        }
+
         function renderProducts(items) {
             const grid = document.getElementById('grid');
             grid.innerHTML = items.map(p => `
@@ -384,9 +403,10 @@
             `).join('');
         }
 
-        function filterCategory(cat) {
+        function filterCategory(e, cat) {
             document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            const btn = (e && (e.currentTarget || e.target)) ? (e.currentTarget || e.target).closest('button') : null;
+            if (btn) btn.classList.add('active');
             if (cat === 'All') renderProducts(products);
             else renderProducts(products.filter(p => p.category === cat));
         }
@@ -412,7 +432,23 @@
 
                 <button class="btn-add" onclick="addToCart(${p.id})">Add To Bag</button>
             `;
-            document.getElementById('modal').style.display = 'flex';
+
+            const modal = document.getElementById('modal');
+            modal.style.display = 'flex';
+
+            // add outside click handler
+            modal.addEventListener('click', outsideModalClick);
+            // add ESC handler
+            document.addEventListener('keydown', escKeyHandler);
+        }
+
+        function outsideModalClick(e) {
+            const modal = document.getElementById('modal');
+            if (e.target === modal) closeModal();
+        }
+
+        function escKeyHandler(e) {
+            if (e.key === 'Escape') closeModal();
         }
 
         function selectSize(btn, sz) {
@@ -422,7 +458,10 @@
         }
 
         function closeModal() {
-            document.getElementById('modal').style.display = 'none';
+            const modal = document.getElementById('modal');
+            modal.style.display = 'none';
+            modal.removeEventListener('click', outsideModalClick);
+            document.removeEventListener('keydown', escKeyHandler);
         }
 
         function addToCart(id) {
@@ -431,26 +470,32 @@
             updateCart();
             closeModal();
             toggleCart(true);
+            saveCart();
         }
 
         function updateCart() {
             document.getElementById('cart-count').innerText = cart.length;
             const container = document.getElementById('cart-items');
             let total = 0;
-            container.innerHTML = cart.map((item, index) => {
-                total += item.price;
-                return `
-                    <div class="cart-item">
-                        <div>
-                            <div><strong>${item.name}</strong></div>
-                            <div style="font-size:0.8rem; color:var(--text-muted);">Size: ${item.size}</div>
-                            <div style="font-size:0.85rem;">${item.price} SAR</div>
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted)">Your bag is empty</p>';
+            } else {
+                container.innerHTML = cart.map((item, index) => {
+                    total += item.price;
+                    return `
+                        <div class="cart-item">
+                            <div>
+                                <div><strong>${item.name}</strong></div>
+                                <div style="font-size:0.8rem; color:var(--text-muted);">Size: ${item.size}</div>
+                                <div style="font-size:0.85rem;">${item.price} SAR</div>
+                            </div>
+                            <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff3333; cursor:pointer;">&times;</button>
                         </div>
-                        <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff3333; cursor:pointer;">&times;</button>
-                    </div>
-                `;
-            }).join('');
+                    `;
+                }).join('');
+            }
             document.getElementById('cart-total').innerText = total;
+            saveCart();
         }
 
         function removeFromCart(index) {
@@ -465,7 +510,11 @@
         }
 
         // Initialize Storefront
-        renderProducts(products);
+        (function init(){
+            loadCart();
+            renderProducts(products);
+            updateCart();
+        })();
     </script>
 </body>
 </html>
