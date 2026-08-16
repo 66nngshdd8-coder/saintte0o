@@ -1,4 +1,6 @@
 name: Extract ZIP images
+permissions:
+  contents: write
 
 on:
   push:
