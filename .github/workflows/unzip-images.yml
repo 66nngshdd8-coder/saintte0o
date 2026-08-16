@@ -1,0 +1,41 @@
+name: Extract ZIP images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: List repo root
+        run: ls -la
+
+      - name: Find and extract first ZIP
+        run: |
+          set -e
+          ZIP_FILE=$(ls *.zip 2>/dev/null | head -n 1 || true)
+          echo "Found ZIP: $ZIP_FILE"
+          if [ -n "$ZIP_FILE" ] && [ -f "$ZIP_FILE" ]; then
+            mkdir -p images
+            unzip -o "$ZIP_FILE" -d images
+            ls -la images | sed -n '1,200p'
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add images || true
+            if git diff --staged --quiet; then
+              echo "No new files to commit"
+            else
+              git commit -m "Add images extracted from $ZIP_FILE"
+              git push origin HEAD:main
+            fi
+          else
+            echo "No ZIP file found in repo root"
+          fi
