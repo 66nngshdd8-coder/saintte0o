@@ -305,6 +305,7 @@
     <nav>
         <a href="#" class="logo">BV<span>X</span>YS</a>
         <div class="nav-links">
+            <button onclick="location.href='gallery.html'">Gallery</button>
             <button onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
         </div>
     </nav>
@@ -351,20 +352,20 @@
 
     <script>
         const products = [
-            { id: 1, name: "Starlight Denim", category: "Denim", price: 1250, fabric: "100% Cotton Denim (13.5 oz)", desc: "Wide leg denim with all-over splatter effect, curved seam construction, and signature historical dragonfly embroidery." },
-            { id: 2, name: "Structured Wrap Pleated Pants", category: "Pants", price: 1100, fabric: "100% Cotton Twill (280 GSM)", desc: "High-waisted wide leg pants featuring structured wrap front panel and deep pleats. Available in Optic White, Gray, and Black." },
-            { id: 3, name: "Dragonfly Structured Shirt", category: "Tops", price: 850, fabric: "100% Cotton Poplin (180 GSM)", desc: "Oversized silhouette with extended shoulder caps, wide pointed collar, and custom back artwork print with SIOXIXX signature." },
-            { id: 4, name: "Dragonfly Organic Sculpted Dress", category: "Dresses", price: 3400, fabric: "Sheer Organza & Linen Blend", desc: "Sculptural dress with leaf-like panels and intricate vein embroidery. Asymmetrical silhouette with flowing layered construction." },
-            { id: 5, name: "Leopard Crystal Flare Jeans", category: "Denim", price: 1450, fabric: "100% Cotton Denim (14 oz)", desc: "All-over leopard print with crystal embellishments, dragonfly metal button hardware, and flare wide-leg cut." },
-            { id: 6, name: "Cream Dragonfly Slit Flare Pants", category: "Pants", price: 980, fabric: "100% Cotton Twill (12 oz)", desc: "Front crease detailing with side slit hems, custom dragonfly button and rivets." },
-            { id: 7, name: "Washed Green Baggy Carpenter Denim", category: "Denim", price: 1150, fabric: "100% Cotton Denim (14.5 oz)", desc: "Garment-washed faded green denim featuring custom hammer loop, curved front panels, and double back pockets." },
-            { id: 8, name: "Long Sleeve Tee & Chino Set", category: "Tops", price: 750, fabric: "240 GSM Cotton Jersey", desc: "Boxy fit grey long sleeve tee with star-ring embroidered logo, paired with 280 GSM Khaki Baggy Chino Shorts." },
-            { id: 9, name: "Leopard Crest Henley", category: "Tops", price: 680, fabric: "250 GSM Cotton Jersey", desc: "White 3-button placket top with embroidered chest crest, historical leopard print, and handwritten statement on the back." },
-            { id: 10, name: "Distressed Pink Denim Jeans", category: "Denim", price: 1300, fabric: "100% Cotton Denim (13.5 oz)", desc: "Heavy distressed details with pink frayed patchwork and dragonfly back-pocket embroidery." },
-            { id: 11, name: "High-Sheen Leather Bomber Jacket", category: "Outerwear", price: 2100, fabric: "High-Sheen Coated PU/Leather", desc: "Two-way metallic zip closure with dragonfly skull patch detail and bold red BVOYS back embroidery." },
-            { id: 12, name: "Vintage Off-White Buffer Jacket", category: "Outerwear", price: 1850, fabric: "Premium Nylon Shell", desc: "Oversized fill buffer jacket with snap-button collar, zip arm pocket, and elasticated cuffs." },
-            { id: 13, name: "Tailored Wool Suit Set", category: "Outerwear", price: 2900, fabric: "420 GSM Premium Wool Blend (70% Wool)", desc: "Cropped jacket with hidden snap closure and dragonfly collar button, matched with fully lined front-pleated wide trousers." },
-            { id: 14, name: "White Thobe Traditional Set", category: "Traditional", price: 1600, fabric: "100% Premium Cotton (120-140 GSM)", desc: "Minimalist white thobe with concealed placket, paired with cotton ghutra, wool agal, and leather footwear." }
+            { id: 1, name: "Starlight Denim", category: "Denim", price: 1250, fabric: "100% Cotton Denim (13.5 oz)", desc: "Wide leg denim with all-over splatter effect, curved seam construction,[...]"},
+            { id: 2, name: "Structured Wrap Pleated Pants", category: "Pants", price: 1100, fabric: "100% Cotton Twill (280 GSM)", desc: "High-waisted wide leg pants featuring structured wrap fro[...]"},
+            { id: 3, name: "Dragonfly Structured Shirt", category: "Tops", price: 850, fabric: "100% Cotton Poplin (180 GSM)", desc: "Oversized silhouette with extended shoulder caps, wide pointe[...]"},
+            { id: 4, name: "Dragonfly Organic Sculpted Dress", category: "Dresses", price: 3400, fabric: "Sheer Organza & Linen Blend", desc: "Sculptural dress with leaf-like panels and intricate[...]"},
+            { id: 5, name: "Leopard Crystal Flare Jeans", category: "Denim", price: 1450, fabric: "100% Cotton Denim (14 oz)", desc: "All-over leopard print with crystal embellishments, dragonfly[...]"},
+            { id: 6, name: "Cream Dragonfly Slit Flare Pants", category: "Pants", price: 980, fabric: "100% Cotton Twill (12 oz)", desc: "Front crease detailing with side slit hems, custom dragon[...]"},
+            { id: 7, name: "Washed Green Baggy Carpenter Denim", category: "Denim", price: 1150, fabric: "100% Cotton Denim (14.5 oz)", desc: "Garment-washed faded green denim featuring custom ha[...]"},
+            { id: 8, name: "Long Sleeve Tee & Chino Set", category: "Tops", price: 750, fabric: "240 GSM Cotton Jersey", desc: "Boxy fit grey long sleeve tee with star-ring embroidered logo, pair[...]"},
+            { id: 9, name: "Leopard Crest Henley", category: "Tops", price: 680, fabric: "250 GSM Cotton Jersey", desc: "White 3-button placket top with embroidered chest crest, historical leopar[...]"},
+            { id: 10, name: "Distressed Pink Denim Jeans", category: "Denim", price: 1300, fabric: "100% Cotton Denim (13.5 oz)", desc: "Heavy distressed details with pink frayed patchwork and dr[...]"},
+            { id: 11, name: "High-Sheen Leather Bomber Jacket", category: "Outerwear", price: 2100, fabric: "High-Sheen Coated PU/Leather", desc: "Two-way metallic zip closure with dragonfly skul[...]"},
+            { id: 12, name: "Vintage Off-White Buffer Jacket", category: "Outerwear", price: 1850, fabric: "Premium Nylon Shell", desc: "Oversized fill buffer jacket with snap-button collar, zip [...]"},
+            { id: 13, name: "Tailored Wool Suit Set", category: "Outerwear", price: 2900, fabric: "420 GSM Premium Wool Blend (70% Wool)", desc: "Cropped jacket with hidden snap closure and drago[...]"},
+            { id: 14, name: "White Thobe Traditional Set", category: "Traditional", price: 1600, fabric: "100% Premium Cotton (120-140 GSM)", desc: "Minimalist white thobe with concealed placket,[...]"},
         ];
 
         let cart = [];
