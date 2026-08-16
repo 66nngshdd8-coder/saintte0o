@@ -134,6 +134,7 @@
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
             padding: 40px;
+            margin-top: 30px;
         }
 
         .product-card {
@@ -189,7 +190,16 @@
             border-color: var(--accent-gold);
         }
 
-        /* Modal */
+        .product-image {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            background: #222;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Modal (kept for compatibility) */
         .modal {
             display: none;
             position: fixed;
@@ -303,7 +313,7 @@
 <body>
 
     <nav>
-        <a href="#" class="logo">BV<span>X</span>YS</a>
+        <a href="/" class="logo">BV<span>X</span>YS</a>
         <div class="nav-links">
             <button onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
         </div>
@@ -328,14 +338,6 @@
 
     <main class="product-grid" id="grid"></main>
 
-    <!-- Product Modal -->
-    <div class="modal" id="modal">
-        <div class="modal-content" role="dialog" aria-modal="true">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
-            <div id="modal-body"></div>
-        </div>
-    </div>
-
     <!-- Cart Drawer -->
     <div class="cart-drawer" id="cart-drawer">
         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -351,20 +353,20 @@
 
     <script>
         const products = [
-            { id: 1, name: "Starlight Denim", category: "Denim", price: 1250, fabric: "100% Cotton Denim (13.5 oz)", desc: "Wide leg denim with all-over splatter effect, curved seam construction, and signature historical dragonfly embroidery." },
-            { id: 2, name: "Structured Wrap Pleated Pants", category: "Pants", price: 1100, fabric: "100% Cotton Twill (280 GSM)", desc: "High-waisted wide leg pants featuring structured wrap front panel and deep pleats. Available in Optic White, Gray, and Black." },
-            { id: 3, name: "Dragonfly Structured Shirt", category: "Tops", price: 850, fabric: "100% Cotton Poplin (180 GSM)", desc: "Oversized silhouette with extended shoulder caps, wide pointed collar, and custom back artwork print with SIOXIXX signature." },
-            { id: 4, name: "Dragonfly Organic Sculpted Dress", category: "Dresses", price: 3400, fabric: "Sheer Organza & Linen Blend", desc: "Sculptural dress with leaf-like panels and intricate vein embroidery. Asymmetrical silhouette with flowing layered construction." },
-            { id: 5, name: "Leopard Crystal Flare Jeans", category: "Denim", price: 1450, fabric: "100% Cotton Denim (14 oz)", desc: "All-over leopard print with crystal embellishments, dragonfly metal button hardware, and flare wide-leg cut." },
-            { id: 6, name: "Cream Dragonfly Slit Flare Pants", category: "Pants", price: 980, fabric: "100% Cotton Twill (12 oz)", desc: "Front crease detailing with side slit hems, custom dragonfly button and rivets." },
-            { id: 7, name: "Washed Green Baggy Carpenter Denim", category: "Denim", price: 1150, fabric: "100% Cotton Denim (14.5 oz)", desc: "Garment-washed faded green denim featuring custom hammer loop, curved front panels, and double back pockets." },
-            { id: 8, name: "Long Sleeve Tee & Chino Set", category: "Tops", price: 750, fabric: "240 GSM Cotton Jersey", desc: "Boxy fit grey long sleeve tee with star-ring embroidered logo, paired with 280 GSM Khaki Baggy Chino Shorts." },
-            { id: 9, name: "Leopard Crest Henley", category: "Tops", price: 680, fabric: "250 GSM Cotton Jersey", desc: "White 3-button placket top with embroidered chest crest, historical leopard print, and handwritten statement on the back." },
-            { id: 10, name: "Distressed Pink Denim Jeans", category: "Denim", price: 1300, fabric: "100% Cotton Denim (13.5 oz)", desc: "Heavy distressed details with pink frayed patchwork and dragonfly back-pocket embroidery." },
-            { id: 11, name: "High-Sheen Leather Bomber Jacket", category: "Outerwear", price: 2100, fabric: "High-Sheen Coated PU/Leather", desc: "Two-way metallic zip closure with dragonfly skull patch detail and bold red BVOYS back embroidery." },
-            { id: 12, name: "Vintage Off-White Buffer Jacket", category: "Outerwear", price: 1850, fabric: "Premium Nylon Shell", desc: "Oversized fill buffer jacket with snap-button collar, zip arm pocket, and elasticated cuffs." },
-            { id: 13, name: "Tailored Wool Suit Set", category: "Outerwear", price: 2900, fabric: "420 GSM Premium Wool Blend (70% Wool)", desc: "Cropped jacket with hidden snap closure and dragonfly collar button, matched with fully lined front-pleated wide trousers." },
-            { id: 14, name: "White Thobe Traditional Set", category: "Traditional", price: 1600, fabric: "100% Premium Cotton (120-140 GSM)", desc: "Minimalist white thobe with concealed placket, paired with cotton ghutra, wool agal, and leather footwear." }
+            { id: 1, name: "Starlight Denim", category: "Denim", price: 1250, fabric: "100% Cotton Denim (13.5 oz)", desc: "Wide leg denim with all-over splatter effect, curved seam construction,[...]"},
+            { id: 2, name: "Structured Wrap Pleated Pants", category: "Pants", price: 1100, fabric: "100% Cotton Twill (280 GSM)", desc: "High-waisted wide leg pants featuring structured wrap fro[...]"},
+            { id: 3, name: "Dragonfly Structured Shirt", category: "Tops", price: 850, fabric: "100% Cotton Poplin (180 GSM)", desc: "Oversized silhouette with extended shoulder caps, wide pointe[...]"},
+            { id: 4, name: "Dragonfly Organic Sculpted Dress", category: "Dresses", price: 3400, fabric: "Sheer Organza & Linen Blend", desc: "Sculptural dress with leaf-like panels and intricate[...]"},
+            { id: 5, name: "Leopard Crystal Flare Jeans", category: "Denim", price: 1450, fabric: "100% Cotton Denim (14 oz)", desc: "All-over leopard print with crystal embellishments, dragonfly[...]"},
+            { id: 6, name: "Cream Dragonfly Slit Flare Pants", category: "Pants", price: 980, fabric: "100% Cotton Twill (12 oz)", desc: "Front crease detailing with side slit hems, custom dragon[...]"},
+            { id: 7, name: "Washed Green Baggy Carpenter Denim", category: "Denim", price: 1150, fabric: "100% Cotton Denim (14.5 oz)", desc: "Garment-washed faded green denim featuring custom ha[...]"},
+            { id: 8, name: "Long Sleeve Tee & Chino Set", category: "Tops", price: 750, fabric: "240 GSM Cotton Jersey", desc: "Boxy fit grey long sleeve tee with star-ring embroidered logo, pair[...]"},
+            { id: 9, name: "Leopard Crest Henley", category: "Tops", price: 680, fabric: "250 GSM Cotton Jersey", desc: "White 3-button placket top with embroidered chest crest, historical leopar[...]"},
+            { id: 10, name: "Distressed Pink Denim Jeans", category: "Denim", price: 1300, fabric: "100% Cotton Denim (13.5 oz)", desc: "Heavy distressed details with pink frayed patchwork and dr[...]"},
+            { id: 11, name: "High-Sheen Leather Bomber Jacket", category: "Outerwear", price: 2100, fabric: "High-Sheen Coated PU/Leather", desc: "Two-way metallic zip closure with dragonfly skul[...]"},
+            { id: 12, name: "Vintage Off-White Buffer Jacket", category: "Outerwear", price: 1850, fabric: "Premium Nylon Shell", desc: "Oversized fill buffer jacket with snap-button collar, zip [...]"},
+            { id: 13, name: "Tailored Wool Suit Set", category: "Outerwear", price: 2900, fabric: "420 GSM Premium Wool Blend (70% Wool)", desc: "Cropped jacket with hidden snap closure and drago[...]"},
+            { id: 14, name: "White Thobe Traditional Set", category: "Traditional", price: 1600, fabric: "100% Premium Cotton (120-140 GSM)", desc: "Minimalist white thobe with concealed placket,[...]"},
         ];
 
         let cart = [];
@@ -392,13 +394,16 @@
         function renderProducts(items) {
             const grid = document.getElementById('grid');
             grid.innerHTML = items.map(p => `
-                <div class="product-card" onclick="openModal(${p.id})">
-                    <div>
-                        <div class="product-category">${p.category}</div>
-                        <div class="product-title">${p.name}</div>
-                        <div class="product-price">${p.price} SAR</div>
-                    </div>
-                    <button class="btn-view">View Piece</button>
+                <div class="product-card">
+                    <a href="product.html?id=${p.id}" style="text-decoration:none; color:inherit;">
+                        <img class="product-image" src="images/${p.id}.jpg" alt="${p.name}" onerror="this.onerror=null;this.src='https://picsum.photos/seed/${p.id}/800/600'" />
+                        <div>
+                            <div class="product-category">${p.category}</div>
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-price">${p.price} SAR</div>
+                        </div>
+                        <button class="btn-view">View Piece</button>
+                    </a>
                 </div>
             `).join('');
         }
@@ -409,68 +414,6 @@
             if (btn) btn.classList.add('active');
             if (cat === 'All') renderProducts(products);
             else renderProducts(products.filter(p => p.category === cat));
-        }
-
-        function openModal(id) {
-            const p = products.find(prod => prod.id === id);
-            selectedSize = 'M';
-            document.getElementById('modal-body').innerHTML = `
-                <h2 class="brand-font" style="margin-bottom:10px;">${p.name}</h2>
-                <p style="color:var(--accent-gold); font-size:1.2rem; margin-bottom:15px;">${p.price} SAR</p>
-                <p style="color:var(--text-muted); line-height:1.6; margin-bottom:20px;">${p.desc}</p>
-                
-                <p style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px;">Select Size:</p>
-                <div class="size-selector">
-                    ${['S', 'M', 'L'].map(sz => `<button class="size-btn ${sz === 'M' ? 'selected' : ''}" onclick="selectSize(this, '${sz}')">${sz}</button>`).join('')}
-                </div>
-
-                <table class="spec-table">
-                    <tr><td>Fabric</td><td>${p.fabric}</td></tr>
-                    <tr><td>Fit</td><td>Signature BVOYS Oversized / Architectural</td></tr>
-                    <tr><td>Hardware</td><td>Custom Dragonfly Engraved Buttons & Rivets</td></tr>
-                </table>
-
-                <button class="btn-add" onclick="addToCart(${p.id})">Add To Bag</button>
-            `;
-
-            const modal = document.getElementById('modal');
-            modal.style.display = 'flex';
-
-            // add outside click handler
-            modal.addEventListener('click', outsideModalClick);
-            // add ESC handler
-            document.addEventListener('keydown', escKeyHandler);
-        }
-
-        function outsideModalClick(e) {
-            const modal = document.getElementById('modal');
-            if (e.target === modal) closeModal();
-        }
-
-        function escKeyHandler(e) {
-            if (e.key === 'Escape') closeModal();
-        }
-
-        function selectSize(btn, sz) {
-            document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            selectedSize = sz;
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('modal');
-            modal.style.display = 'none';
-            modal.removeEventListener('click', outsideModalClick);
-            document.removeEventListener('keydown', escKeyHandler);
-        }
-
-        function addToCart(id) {
-            const p = products.find(prod => prod.id === id);
-            cart.push({ ...p, size: selectedSize });
-            updateCart();
-            closeModal();
-            toggleCart(true);
-            saveCart();
         }
 
         function updateCart() {
